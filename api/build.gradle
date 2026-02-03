@@ -1,11 +1,41 @@
 plugins {
     id 'project-conventions'
+    id 'jacoco'
 }
 
 dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 }
 
 springBoot {
     mainClass = 'com.reliaquest.api.ApiApplication'
+}
+
+jacoco {
+    toolVersion = '0.8.11'
+}
+
+tasks.named('test') {
+    finalizedBy 'jacocoTestReport', 'jacocoTestCoverageVerification'
+}
+
+tasks.jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    dependsOn test
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.95
+            }
+        }
+    }
 }

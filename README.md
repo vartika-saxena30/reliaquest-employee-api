@@ -138,6 +138,11 @@ limit requests, so keep this mind when designing/implementing the actual Employe
 
 _Note_: Console logs each mock employee upon startup.
 
+### Reviewer note
+
+The mock server randomly applies rate limiting (HTTP 429). The API client retries with backoff, but if you still hit a 429,
+wait a few seconds and retry the request. Keep the mock server running to maintain a consistent dataset during validation.
+
 ### Code Formatting
 
 This project utilizes Gradle plugin [Diffplug Spotless](https://github.com/diffplug/spotless/tree/main/plugin-gradle) to enforce format
